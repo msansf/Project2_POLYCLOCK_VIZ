@@ -1,0 +1,84 @@
+---
+title: "Visualizing the Design Space of a Circadian Climate-Adaptation Study"
+subtitle: "INFO 526 · Project 2 proposal"
+author: "M.A. Sans-Fuentes"
+date: last-modified
+format:
+  html:
+    toc: true
+    code-fold: true
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+
+library(readr)
+library(dplyr)
+
+# Paths are relative to this file: Quarto renders from proposal/
+pops <- read_csv("../data/derived/populations_54.csv",     show_col_types = FALSE)
+clim <- read_csv("../data/derived/climate_54.csv",         show_col_types = FALSE)
+bufs <- read_csv("../data/derived/climate_buffers.csv",    show_col_types = FALSE)
+sens <- read_csv("../data/derived/climate_sensitivity.csv", show_col_types = FALSE) 
+
+# Numbers quoted in the text
+n_pops  <- nrow(pops)                                        # populations
+n_whole <- sum(pops$lat %% 1 == 0 & pops$lon %% 1 == 0)      # coordinates with no decimals 
+n_people  <- sum(pops$n)                                     # individuals
+n_sites   <- n_distinct(pops$site_id)                        # sampling sites
+n_regions <- n_distinct(pops$region)                         # regions
+n_eas     <- sum(pops$region == "EAST_ASIA")
+n_oce     <- sum(pops$region == "OCEANIA")
+on_water  <- clim$population[is.na(clim$BIO1)]            # no climate at the point
+r_t_seas  <- cor(clim$BIO1, clim$BIO4, use = "complete.obs")
+radii     <- sort(unique(bufs$radius_km[bufs$radius_km > 0]))
+```
+
+# High-level goal
+
+I am conducting a population genomics project (POLYCLOCK) to investigate whether the human circadian clock has adapted to regional light and temperature regimes. For this class project, I will build an interactive Shiny application that visualizes the geographic and climatic structure of `r n_pops` human populations, to assess whether the data and study design can answer this question before proceeding with genetic analysis.
+
+# Goals and motivation
+
+Three things determine whether it is possible to answer POLYCLOCK’s research question and none of them requires genetic data to check. First, environment must be distinguishable from ancestry in these populations, given that both are spatially structured and either one could explain the same pattern. Second, temperature has to be separable from day length, as both vary with latitude and the study treats them as alternative explanations. Third, the coordinates of the populations have to be precise enough for the resolution at which the climate data are analyzed.
+
+All three are questions related to data structure and precision, making them problems of visualization rather than statistics. A table containing `r n_pops` populations and climate variables does not show whether climate groupings align with continental ones. A correlation between temperature and day length gives a single number, when what really matters is to identify which populations departs from the pattern. And a single climate value per population hides whether that value depends on coordinate precision: `r n_whole` of the `r n_pops` coordinates are recorded only to the whole degree, so the climate assigned to them may change depending on the scale at which it is measured. The final result is a small application developed in Shiny, featuring visualizations that allow these questions to be answered at a glance with controls that let readers check the answers for themselves.
+
+## Data
+
+All datasets are real and public, and all are downloaded and processed.
+
+| Dataset | What it provides | Why this dataset |
+|----|----|----|
+| [gnomAD v3.1.2 HGDP + 1KG metadata](https://gnomad.broadinstitute.org/news/2021-10-gnomad-v3-1-2-minor-release) (Koenig et al. 2024), with Bergström et al. (2020) population annotations | Population names, regions, sample sizes and sampling coordinates | The Human Genome Diversity Project is the most geographically diverse sample of sequenced human populations, and every population has a recorded location |
+| [WorldClim 2.1 bioclimatic variables](https://www.worldclim.org/data/worldclim21.html) (Fick and Hijmans 2017) | Annual mean temperature, temperature seasonality, warmest and coldest quarter means, annual precipitation, at 30 arc-seconds (\~1 km) | Standard global climate surfaces, fine enough to test how much coordinate precision matters |
+| GPW v4 population density, 2000 (CIESIN 2018) | People per km² at 30 arc-seconds | Weights climate towards where people live, for populations in mountainous terrain |
+
+The metadata cover `r format(n_people, big.mark = ",")` individuals in `r n_pops` populations from `r n_regions` regions. The populations sit at `r n_sites` distinct sites: Balochi and Brahui were sampled at the same place, as were Druze and Palestinian, so each pair shares one climate. The metadata also carries an older set of population columns that merges Papuan and Han into single populations and misplaces several coordinates, so only the Bergström et al. (2020) columns are used, and the script checks that they are.
+
+## Research Questions
+
+## Approach 
+
+### Planned figures
+
+### What I am teaching myself
+
+# Plan
+
+# Repository organization
+
+# References
+
+- Bergström, A., McCarthy, S.A., Hui, R. et al. (2020). Insights into human genetic variation and population history from 929 diverse genomes. *Science* 367(6484), eayy512. <https://doi.org/10.1126/science.aay5012>
+- Fick, S.E. and Hijmans, R.J. (2017). WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. *International Journal of Climatology* 37(12), 4302–4315. <https://doi.org/10.1002/joc.5086>
+- Koenig, Z., Yohannes, M.T., Nkambule, L.L. et al. (2024). A harmonized public resource of deeply sequenced diverse human genomes. *Genome Research* 34(5), 796–809. <https://doi.org/10.1101/gr.278378.123>
+
+## Data sources
+
+- gnomAD v3.1.2 HGDP + 1KG sample metadata (`gnomad_meta_updated.tsv`). Genome Aggregation Database. <https://gnomad-public-us-east-1.s3.amazonaws.com/release/3.1/secondary_analyses/hgdp_1kg_v2/metadata_and_qc/gnomad_meta_updated.tsv> (accessed October 2026).
+- WorldClim 2.1 bioclimatic variables, 30 arc-seconds. <https://www.worldclim.org/data/worldclim21.html> (accessed October 2026).
