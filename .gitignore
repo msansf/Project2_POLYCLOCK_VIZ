@@ -4,3 +4,10 @@
 .Ruserdata
 
 /.quarto/
+
+# Raw data is downloaded by the scripts, not stored in the repository
+data/raw/*
+!data/raw/README.md
+
+# macOS
+.DS_Store
