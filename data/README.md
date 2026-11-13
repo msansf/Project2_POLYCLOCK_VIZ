@@ -99,3 +99,8 @@ Built by `scripts/02_climate_data.R`. One row per population: how far its climat
 
 `land_fraction` is 0 or 1 at the point. In `climate_buffers.csv` the same column is the share of the circle that is land (0 to 1).  
 
+## Known issues
+
+- 36 of the 54 coordinates are given to the whole degree only (up to ~55 km of rounding in latitude).
+- Adygei's published coordinate lies in the Black Sea, so its values at the point are NA.
+- Several mountain populations (Burusho, Kalash, Xibo, Tu) have point and area values far colder than the valleys where they live.  
