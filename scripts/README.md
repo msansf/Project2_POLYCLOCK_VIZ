@@ -15,7 +15,6 @@ source("scripts/00_download_metadata.R")
 source("scripts/01_populations.R")
 source("scripts/02_climate_data.R")
 ```
-
 **Download size.** The first time you run `02_climate_data.R`, it downloads the
 WorldClim climate maps (about 10 GB). Later runs reuse the saved maps.
 
