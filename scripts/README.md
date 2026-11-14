@@ -10,6 +10,8 @@ script stops with an error message.
 | `01_populations.R` | `data/raw/gnomad_meta_updated.tsv` | `data/derived/populations_54.csv` | One row per HGDP population, with Bergström et al. (2020) coordinates and regions; checks for 54 populations at 52 sites |
 | `02_climate_data.R` | `data/derived/populations_54.csv`; downloads WorldClim 2.1 to `data/raw/worldclim/` | `data/derived/climate_54.csv`, `climate_buffers.csv`, `climate_sensitivity.csv` | Climate at the point and as area-weighted means over 10–100 km buffers, annual photoperiod range, and how much each value changes with the radius |
 
+To download the files and generate derived data run:
+
 ```r
 source("scripts/00_download_metadata.R")
 source("scripts/01_populations.R")
@@ -23,5 +25,6 @@ this line in its Settings section:
 
     RESOLUTION <- 10     # test only: coarser maps, much smaller download
 
-The final files must be made with `RESOLUTION <- 0.5` (maps at ~1 km). The
-coarser test maps give different climate values, so don't keep the test results.
+The final files must be made with `RESOLUTION <- 0.5` (maps at ~1 km). A test
+run overwrites the climate files in `data/derived/` with coarser values, so set
+it back to `0.5` and run the script again before you commit. 

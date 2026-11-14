@@ -1,11 +1,11 @@
 ---
-title: "Project title"
-subtitle: "INFO 526 - Project 1"
-author: "Team name"
+title: "Visualizing the Design Space of a Circadian Climate-Adaptation Study"
+subtitle: "INFO 526 · Project 2"
+author: "Maria.A. Sans-Fuentes"
 format: html
 editor: visual
 ---
 
 ## Abstract
 
-Add project abstract here.
+To be written when the project is complete
