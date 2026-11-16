@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Maria A. Sans-Fuentes">
-<meta name="dcterms.date" content="2026-11-14">
+<meta name="dcterms.date" content="2026-11-15">
 
 <title>Visualizing the Design Space of a Circadian Climate-Adaptation Study</title>
 <style>
@@ -2193,7 +2193,7 @@ vertical-align: -.125em;
   <ul class="collapse">
   <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data sources</a></li>
   </ul></li>
-  <li><a href="#ai-disclosure-how-ai-claude-was-used-in-this-proposal" id="toc-ai-disclosure-how-ai-claude-was-used-in-this-proposal" class="nav-link" data-scroll-target="#ai-disclosure-how-ai-claude-was-used-in-this-proposal">AI disclosure: how AI (Claude) was used in this proposal</a></li>
+  <li><a href="#ai-disclosure" id="toc-ai-disclosure" class="nav-link" data-scroll-target="#ai-disclosure">AI disclosure</a></li>
   </ul>
 </nav>
 </div>
@@ -2219,7 +2219,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 14, 2026</p>
+      <p class="date">November 15, 2026</p>
     </div>
   </div>
   
@@ -2233,16 +2233,16 @@ vertical-align: -.125em;
 
 <section id="high-level-goal" class="level1">
 <h1>High-level goal</h1>
-<p>I am conducting a population genomics project (POLYCLOCK) to investigate whether the human circadian clock has adapted to regional light and temperature regimes. For this class project, I will build an interactive Shiny application that visualizes the geographic and climatic structure of 54 human populations, to assess whether the data and study design can answer this question before proceeding with genetic analysis.</p>
+<p>The circadian clock is the internal biological timer that keeps sleep, body temperature and other functions on a cycle of about 24 hours, and it is set each day mainly by light. I am conducting a population genomics project (POLYCLOCK) to investigate whether the human circadian clock has adapted to regional light and temperature regimes. For this class project, I will build a Shiny application, an interactive web page written in R where the reader changes the figures with controls such as sliders and menus. It will visualize the geographic and climatic structure of 54 human populations, to assess whether the data and study design can answer this question before proceeding with genetic analysis.</p>
 </section>
 <section id="goals-and-motivation" class="level1">
 <h1>Goals and motivation</h1>
-<p>Three things determine whether it is possible to answer POLYCLOCK’s research question and none of them requires genetic data to check. First, climate must be distinguishable from ancestry in these populations, given that both are spatially structured and either one could explain the same pattern. Second, temperature has to be separable from day length (measured as the annual photoperiod range, the difference in hours between the longest and shortest day of the year), as both vary with latitude and the study treats them as alternative explanations. Third, the coordinates of the populations have to be precise enough for the resolution at which the climate data are analyzed.</p>
-<p>All three are questions related to data structure and precision, making them problems of visualization rather than statistics. A table containing 54 populations and climate variables does not show whether climate groupings align with continental ones. A correlation between temperature and day length gives a single number, when what really matters is to identify which populations depart from the pattern. And a single climate value per population hides whether that value depends on coordinate precision: 36 of the 54 coordinates are recorded only to the nearest whole degree, so the climate assigned to them may change depending on the scale at which it is measured. The final result is a small application developed in Shiny, featuring visualizations that allow these questions to be answered at a glance with controls that let readers check the answers for themselves.</p>
+<p>Three things determine whether it is possible to answer POLYCLOCK’s research question, and none of them requires genetic data to check. First, climate must be distinguishable from ancestry (how closely populations are related), because both follow geography and either could explain a genetic difference between populations. Second, temperature has to be separable from day length (measured as the annual photoperiod range, the difference in hours between the longest and shortest day of the year), because both vary with latitude. Third, the coordinates of the populations have to be precise enough for climate maps with a resolution of about 1 km.</p>
+<p>These are questions related to data structure and precision, and a table or a single statistic hides the answer. A table containing 54 populations and climate variables does not show whether climate groupings align with continental ones. A correlation between temperature and day length gives a single number, when what matters is which populations depart from the pattern. And a single climate value per population hides whether that value depends on coordinate precision: 36 of the 54 coordinates are recorded only to the nearest whole degree, so the true location may be tens of kilometers away, in a different climate. The final result is a small Shiny application with interactive figures that let readers explore these questions for themselves.</p>
 </section>
 <section id="data" class="level1">
 <h1>Data</h1>
-<p>All datasets are real and public, and all are downloaded and processed.</p>
+<p>All datasets are real and publicly available, and I have already downloaded and processed them.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -2253,32 +2253,32 @@ vertical-align: -.125em;
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="https://gnomad.broadinstitute.org/news/2021-10-gnomad-v3-1-2-minor-release">gnomAD v3.1.2 HGDP + 1KG metadata</a> (Koenig et al. 2024), with Bergström et al. (2020) population annotations</td>
-<td>Population names, regions, sample sizes and sampling coordinates</td>
-<td>The Human Genome Diversity Project (HGDP) is the most geographically diverse sample of sequenced human populations, and every population has a recorded location</td>
+<td><a href="https://gnomad.broadinstitute.org/news/2021-10-gnomad-v3-1-2-minor-release">gnomAD v3.1.2 HGDP + 1000 Genomes (1KG) metadata</a> (Koenig et al. 2024), with Bergström et al. (2020) population annotations</td>
+<td>Population names, regions, sample sizes and population coordinates</td>
+<td>The Human Genome Diversity Project (HGDP) is one of the most geographically diverse samples of sequenced human populations, and every population has a recorded location</td>
 </tr>
 <tr class="even">
 <td><a href="https://www.worldclim.org/data/bioclim.html">WorldClim 2.1 bioclimatic variables</a> (Fick and Hijmans 2017)</td>
-<td>Annual mean temperature, temperature seasonality, warmest and coldest quarter means, annual precipitation, at 30 arc-seconds (~1 km)</td>
+<td>Annual mean temperature, temperature seasonality, mean temperature of the warmest and coldest quarters, annual precipitation, at 30 arc-seconds (~1 km)</td>
 <td>Standard global climate surfaces, fine enough to test how much coordinate precision matters</td>
 </tr>
 </tbody>
 </table>
 <p>The metadata file and the climate maps are downloaded by scripts in the repository (<code>scripts/00_download_metadata.R</code> and <code>scripts/02_climate_data.R</code>); the file address and access date are in the References. Day length is not downloaded: the annual photoperiod range is calculated from each population’s latitude with the model of Forsythe et al. (1995).</p>
-<p>The Human Genome Diversity Project part of the metadata covers 948 individuals in 54 populations from 7 regions. The populations sit at 52 distinct sites: Balochi and Brahui were sampled at the same place, as were Druze and Palestinian, so each pair shares one climate. The metadata also carries an older set of population columns that does not split Papuan or Han into separate populations and gives three populations the wrong coordinates, so only the Bergström et al. (2020) columns are used.</p>
+<p>The HGDP part of the metadata covers 948 individuals in 54 populations from 7 regions. The populations sit at 52 distinct sites: Balochi and Brahui have the same recorded coordinates, as do Druze and Palestinian, so each pair is assigned one climate. The metadata also carries an older set of population columns with no published description. It merges the Papuan and the Han populations, which live in different climates, and its coordinates for three populations do not match those of Bergström et al. (2020). I therefore use only the Bergström et al. (2020) columns.</p>
 </section>
 <section id="research-questions" class="level1">
 <h1>Research questions</h1>
 <p>While POLYCLOCK asks whether the human circadian clock has adapted to climate, answering that requires genetic data that this project does not include. My focus is the preliminary question of whether the POLYCLOCK study design can answer it. That depends on three things.</p>
 <ol type="1">
 <li><p><strong>How far is climate confounded with ancestry through geography?</strong> Geography shapes both: populations that live close together tend to share a climate and also share ancestry. Cold populations sit mostly at high latitudes, where the samples come from Eurasia, so a population’s climate partly tells you its continent. If continental regions occupy distinct zones of climate, an analysis cannot easily separate the effect of climate from the effect of shared ancestry. The statistical correction for relatedness then risks removing part of the real climate signal together with the ancestry signal.</p></li>
-<li><p><strong>Can temperature be separated from day length?</strong> Day length follows latitude exactly, because the annual photoperiod range is set by geometry. Temperature follows latitude only loosely, because altitude, continentality (distance from the sea) and ocean currents also matter. The two can be told apart only where populations break the latitude–temperature pattern, so the question is how many populations do so, and which ones. The sample also limits where those populations can come from: every population at or above 40° absolute latitude is Eurasian, and 14 of the 15 are European or East Asian. The strong day-length contrasts therefore come almost entirely from two regions. This ties the question to the first one: the populations that carry the day-length contrast are the Eurasian ones, so day length is as entangled with ancestry as temperature is.</p></li>
-<li><p><strong>How much does coordinate imprecision move the climate values?</strong> HGDP coordinates are population centroids, and several are approximate. 36 of the 54 are recorded only to the whole degree, so the true location may be up to about 55 km away in latitude. The climate maps, in contrast, resolve about 1 km. The question is which climate values stay stable across that uncertainty, and which sit on gradients (such as mountains and coasts) so steep that the value at a single point depends on exactly where it falls.</p></li>
+<li><p><strong>Can temperature be separated from day length?</strong> Day length follows latitude exactly, because the annual photoperiod range is set by geometry. Temperature follows latitude only loosely, because altitude, continentality (distance from the sea) and ocean currents also matter. The two can be told apart only where populations break the latitude–temperature pattern, so the question is how many populations do so, and which ones. The sample also limits where those populations can come from: every population at or above 40° absolute latitude is Eurasian, and 14 of the 15 are European or East Asian. The strong day-length contrasts therefore come almost entirely from two regions. This ties the question to the first one: the populations that carry the day-length contrast are the Eurasian ones, so day length is also entangled with ancestry.</p></li>
+<li><p><strong>How much does coordinate imprecision move the climate values?</strong> HGDP coordinates give an approximate location for each population, not an exact sampling site. 36 of the 54 coordinates are recorded only to the nearest whole degree, so the true location may be up to about 55 km away in latitude. The climate maps, in contrast, resolve about 1 km. The question is which climate values stay stable across that uncertainty, and which sit on gradients (such as mountains and coasts) so steep that the value at a single point depends on exactly where it falls.</p></li>
 </ol>
 </section>
 <section id="approach" class="level1">
 <h1>Approach</h1>
-<p>I will build an interactive Shiny app that answers the three questions with linked figures. The data tables are built in advance by the scripts in the repository, and the app will read them, so every figure can be reproduced from the downloaded data.</p>
+<p>I will build a Shiny app that answers the three questions with interactive figures. The scripts in the repository download the data and have already built the tables that the app will use, so anyone can rerun them and get the same figures.</p>
 <section id="planned-figures" class="level2">
 <h2 class="anchored" data-anchor-id="planned-figures">Planned figures</h2>
 <ul>
@@ -2289,7 +2289,7 @@ vertical-align: -.125em;
 </section>
 <section id="what-is-new-to-me" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-new-to-me">What is new to me</h2>
-<p>For this class I am teaching myself three new skills: working with maps, buffers and raster data in the <code>terra</code> package, building an interactive app with Shiny and deploying the app so that others can access it. Before writing this proposal, I used <code>terra</code> to check that the climate data could be retrieved and processed (<code>scripts/02_climate_data.R</code>). After the proposal is revised, Shiny and deployment will be the main focus.</p>
+<p>For this class I am teaching myself three new skills: working with maps, buffers and raster data in the <code>terra</code> package; building an interactive app with Shiny; and deploying the app so that others can access it. Before writing this proposal, I used <code>terra</code> (with the <code>geodata</code> package for the download) to extract the climate data and build the climate tables (<code>scripts/02_climate_data.R</code>). After the proposal is revised, Shiny and deployment will be the main focus.</p>
 <p>In class we made maps with <code>sf</code>, which works with vector data such as points and polygons. My climate data are rasters: grids of about 1 km cells covering the whole world. <code>terra</code> is built for rasters, reads the large map files from disk without loading them into memory, and lets me take the mean of the cells inside a circle, weighting each cell by how much of it lies inside. That weighted mean is what makes the circle comparison for Question 3 possible, and <code>sf</code> alone cannot do it.</p>
 </section>
 </section>
@@ -2333,11 +2333,11 @@ vertical-align: -.125em;
 </tr>
 <tr class="odd">
 <td>Proposal for peer review</td>
-<td>In progress</td>
+<td>Done</td>
 <td>M. Sans-Fuentes</td>
 <td>Nov 16 (before class)</td>
 <td>High</td>
-<td>Finish the draft: plan, repository organization and references</td>
+<td>Draft finished, rendered and pushed to the repository</td>
 </tr>
 <tr class="even">
 <td>Peer review in class</td>
@@ -2372,12 +2372,12 @@ vertical-align: -.125em;
 <td>Basic app that reads the derived tables and shows the three figures (before Thanksgiving)</td>
 </tr>
 <tr class="even">
-<td>Radius slider (question 3)</td>
+<td>Controls</td>
 <td>To do</td>
 <td>M. Sans-Fuentes</td>
 <td>Nov 28</td>
 <td>High</td>
-<td>Add the radius slider to the point-versus-circle figure</td>
+<td>Add the climate-variable dropdown (Question 1) and the radius slider (Question 3)</td>
 </tr>
 <tr class="odd">
 <td>Link the figures</td>
@@ -2385,7 +2385,7 @@ vertical-align: -.125em;
 <td>M. Sans-Fuentes</td>
 <td>Nov 30</td>
 <td>Moderate</td>
-<td>Click a population in one figure to highlight the same population in the other two</td>
+<td>If time allows: click a population in one figure to highlight the same population in the other two</td>
 </tr>
 <tr class="even">
 <td>Deploy the app</td>
@@ -2493,10 +2493,11 @@ vertical-align: -.125em;
 </ul>
 </section>
 </section>
-<section id="ai-disclosure-how-ai-claude-was-used-in-this-proposal" class="level1">
-<h1>AI disclosure: how AI (Claude) was used in this proposal</h1>
+<section id="ai-disclosure" class="level1">
+<h1>AI disclosure</h1>
+<p>How AI (Claude) was used in this proposal:</p>
 <ul>
-<li><p><strong>Coding assistance:</strong> to learn how to use the <code>terra</code> package to download and extract the climate data, to check my photoperiod function against Forsythe et al. (1995), and to debug the scripts that download and process the climate data and the population data (<code>scripts/00_download_metadata.R</code>, <code>scripts/01_populations.R</code> and <code>scripts/02_climate_data.R</code>). I ran and checked the code myself.</p></li>
+<li><p><strong>Coding assistance:</strong> to learn how to use the <code>terra</code> and <code>geodata</code> packages to download and extract the climate data, to check my photoperiod function against Forsythe et al. (1995), and to debug the scripts that download and process the climate data and the population data (<code>scripts/00_download_metadata.R</code>, <code>scripts/01_populations.R</code> and <code>scripts/02_climate_data.R</code>). I ran and checked the code myself.</p></li>
 <li><p><strong>Grammar and typos revision:</strong> I used it to review the wording of the code comments, the READMEs and parts of this proposal. I wrote the text and made the design decisions myself.</p></li>
 <li><p><strong>Document review and formatting:</strong> to check the proposal for consistency (section names, terms, references and numbers against the data tables), and to fix Quarto and Markdown formatting problems (YAML header, table of contents, long links).</p></li>
 </ul>

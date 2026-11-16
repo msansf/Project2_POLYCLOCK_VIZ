@@ -27,9 +27,9 @@ list_packages <- c("dplyr", "readr")
 # Install any package that is not installed yet
 for (pk in list_packages) {                # Loop to check if packages are 
     # install, and if not install them
-    if(!require(pk, character.only = T))
+    if(!require(pk, character.only = TRUE))
         install.packages(pk)
-    library(pk, character.only = T)        # Load packages in the vector package
+    library(pk, character.only = TRUE)        # Load packages in the vector package
 }
 
 
@@ -49,26 +49,26 @@ n_regions <- n_distinct(pops$region)                         # regions
 
 # High-level goal
 
-I am conducting a population genomics project (POLYCLOCK) to investigate whether the human circadian clock has adapted to regional light and temperature regimes. For this class project, I will build an interactive Shiny application that visualizes the geographic and climatic structure of `r n_pops` human populations, to assess whether the data and study design can answer this question before proceeding with genetic analysis.
+The circadian clock is the internal biological timer that keeps sleep, body temperature and other functions on a cycle of about 24 hours, and it is set each day mainly by light. I am conducting a population genomics project (POLYCLOCK) to investigate whether the human circadian clock has adapted to regional light and temperature regimes. For this class project, I will build a Shiny application, an interactive web page written in R where the reader changes the figures with controls such as sliders and menus. It will visualize the geographic and climatic structure of `r n_pops` human populations, to assess whether the data and study design can answer this question before proceeding with genetic analysis.
 
 # Goals and motivation
 
-Three things determine whether it is possible to answer POLYCLOCK’s research question and none of them requires genetic data to check. First, climate must be distinguishable from ancestry in these populations, given that both are spatially structured and either one could explain the same pattern. Second, temperature has to be separable from day length (measured as the annual photoperiod range, the difference in hours between the longest and shortest day of the year), as both vary with latitude and the study treats them as alternative explanations. Third, the coordinates of the populations have to be precise enough for the resolution at which the climate data are analyzed.
+Three things determine whether it is possible to answer POLYCLOCK’s research question, and none of them requires genetic data to check. First, climate must be distinguishable from ancestry (how closely populations are related), because both follow geography and either could explain a genetic difference between populations. Second, temperature has to be separable from day length (measured as the annual photoperiod range, the difference in hours between the longest and shortest day of the year), because both vary with latitude. Third, the coordinates of the populations have to be precise enough for climate maps with a resolution of about 1 km.
 
-All three are questions related to data structure and precision, making them problems of visualization rather than statistics. A table containing `r n_pops` populations and climate variables does not show whether climate groupings align with continental ones. A correlation between temperature and day length gives a single number, when what really matters is to identify which populations depart from the pattern. And a single climate value per population hides whether that value depends on coordinate precision: `r n_whole` of the `r n_pops` coordinates are recorded only to the nearest whole degree, so the climate assigned to them may change depending on the scale at which it is measured. The final result is a small application developed in Shiny, featuring visualizations that allow these questions to be answered at a glance with controls that let readers check the answers for themselves.
+These are questions related to data structure and precision, and a table or a single statistic hides the answer. A table containing `r n_pops` populations and climate variables does not show whether climate groupings align with continental ones. A correlation between temperature and day length gives a single number, when what matters is which populations depart from the pattern. And a single climate value per population hides whether that value depends on coordinate precision: `r n_whole` of the `r n_pops` coordinates are recorded only to the nearest whole degree, so the true location may be tens of kilometers away, in a different climate. The final result is a small Shiny application with interactive figures that let readers explore these questions for themselves.
 
 # Data
 
-All datasets are real and public, and all are downloaded and processed.
+All datasets are real and publicly available, and I have already downloaded and processed them.
 
 | Dataset | What it provides | Why this dataset |
 |---------------------|--------------------------|--------------------------|
-| [gnomAD v3.1.2 HGDP + 1KG metadata](https://gnomad.broadinstitute.org/news/2021-10-gnomad-v3-1-2-minor-release) (Koenig et al. 2024), with Bergström et al. (2020) population annotations | Population names, regions, sample sizes and sampling coordinates | The Human Genome Diversity Project (HGDP) is the most geographically diverse sample of sequenced human populations, and every population has a recorded location |
-| [WorldClim 2.1 bioclimatic variables](https://www.worldclim.org/data/bioclim.html) (Fick and Hijmans 2017) | Annual mean temperature, temperature seasonality, warmest and coldest quarter means, annual precipitation, at 30 arc-seconds (\~1 km) | Standard global climate surfaces, fine enough to test how much coordinate precision matters |
+| [gnomAD v3.1.2 HGDP + 1000 Genomes (1KG) metadata](https://gnomad.broadinstitute.org/news/2021-10-gnomad-v3-1-2-minor-release) (Koenig et al. 2024), with Bergström et al. (2020) population annotations | Population names, regions, sample sizes and population coordinates | The Human Genome Diversity Project (HGDP) is one of the most geographically diverse samples of sequenced human populations, and every population has a recorded location |
+| [WorldClim 2.1 bioclimatic variables](https://www.worldclim.org/data/bioclim.html) (Fick and Hijmans 2017) | Annual mean temperature, temperature seasonality, mean temperature of the warmest and coldest quarters, annual precipitation, at 30 arc-seconds (\~1 km) | Standard global climate surfaces, fine enough to test how much coordinate precision matters |
 
 The metadata file and the climate maps are downloaded by scripts in the repository (`scripts/00_download_metadata.R` and `scripts/02_climate_data.R`); the file address and access date are in the References. Day length is not downloaded: the annual photoperiod range is calculated from each population's latitude with the model of Forsythe et al. (1995).
 
-The Human Genome Diversity Project part of the metadata covers `r format(n_people, big.mark = ",")` individuals in `r n_pops` populations from `r n_regions` regions. The populations sit at `r n_sites` distinct sites: Balochi and Brahui were sampled at the same place, as were Druze and Palestinian, so each pair shares one climate. The metadata also carries an older set of population columns that does not split Papuan or Han into separate populations and gives three populations the wrong coordinates, so only the Bergström et al. (2020) columns are used.
+The HGDP part of the metadata covers `r format(n_people, big.mark = ",")` individuals in `r n_pops` populations from `r n_regions` regions. The populations sit at `r n_sites` distinct sites: Balochi and Brahui have the same recorded coordinates, as do Druze and Palestinian, so each pair is assigned one climate. The metadata also carries an older set of population columns with no published description. It merges the Papuan and the Han populations, which live in different climates, and its coordinates for three populations do not match those of Bergström et al. (2020). I therefore use only the Bergström et al. (2020) columns.
 
 # Research questions
 
@@ -76,13 +76,13 @@ While POLYCLOCK asks whether the human circadian clock has adapted to climate, a
 
 1.  **How far is climate confounded with ancestry through geography?** Geography shapes both: populations that live close together tend to share a climate and also share ancestry. Cold populations sit mostly at high latitudes, where the samples come from Eurasia, so a population's climate partly tells you its continent. If continental regions occupy distinct zones of climate, an analysis cannot easily separate the effect of climate from the effect of shared ancestry. The statistical correction for relatedness then risks removing part of the real climate signal together with the ancestry signal.
 
-2.  **Can temperature be separated from day length?** Day length follows latitude exactly, because the annual photoperiod range is set by geometry. Temperature follows latitude only loosely, because altitude, continentality (distance from the sea) and ocean currents also matter. The two can be told apart only where populations break the latitude–temperature pattern, so the question is how many populations do so, and which ones. The sample also limits where those populations can come from: every population at or above 40° absolute latitude is Eurasian, and 14 of the 15 are European or East Asian. The strong day-length contrasts therefore come almost entirely from two regions. This ties the question to the first one: the populations that carry the day-length contrast are the Eurasian ones, so day length is as entangled with ancestry as temperature is.
+2.  **Can temperature be separated from day length?** Day length follows latitude exactly, because the annual photoperiod range is set by geometry. Temperature follows latitude only loosely, because altitude, continentality (distance from the sea) and ocean currents also matter. The two can be told apart only where populations break the latitude–temperature pattern, so the question is how many populations do so, and which ones. The sample also limits where those populations can come from: every population at or above 40° absolute latitude is Eurasian, and 14 of the 15 are European or East Asian. The strong day-length contrasts therefore come almost entirely from two regions. This ties the question to the first one: the populations that carry the day-length contrast are the Eurasian ones, so day length is also entangled with ancestry.
 
-3.  **How much does coordinate imprecision move the climate values?** HGDP coordinates are population centroids, and several are approximate. `r n_whole` of the `r n_pops` are recorded only to the whole degree, so the true location may be up to about 55 km away in latitude. The climate maps, in contrast, resolve about 1 km. The question is which climate values stay stable across that uncertainty, and which sit on gradients (such as mountains and coasts) so steep that the value at a single point depends on exactly where it falls.
+3.  **How much does coordinate imprecision move the climate values?** HGDP coordinates give an approximate location for each population, not an exact sampling site. `r n_whole` of the `r n_pops` coordinates are recorded only to the nearest whole degree, so the true location may be up to about 55 km away in latitude. The climate maps, in contrast, resolve about 1 km. The question is which climate values stay stable across that uncertainty, and which sit on gradients (such as mountains and coasts) so steep that the value at a single point depends on exactly where it falls.
 
 # Approach
 
-I will build an interactive Shiny app that answers the three questions with linked figures. The data tables are built in advance by the scripts in the repository, and the app will read them, so every figure can be reproduced from the downloaded data.
+I will build a Shiny app that answers the three questions with interactive figures. The scripts in the repository download the data and have already built the tables that the app will use, so anyone can rerun them and get the same figures.
 
 ## Planned figures
 
@@ -94,7 +94,7 @@ I will build an interactive Shiny app that answers the three questions with link
 
 ## What is new to me
 
-For this class I am teaching myself three new skills: working with maps, buffers and raster data in the `terra` package, building an interactive app with Shiny and deploying the app so that others can access it. Before writing this proposal, I used `terra` to check that the climate data could be retrieved and processed (`scripts/02_climate_data.R`). After the proposal is revised, Shiny and deployment will be the main focus.
+For this class I am teaching myself three new skills: working with maps, buffers and raster data in the `terra` package; building an interactive app with Shiny; and deploying the app so that others can access it. Before writing this proposal, I used `terra` (with the `geodata` package for the download) to extract the climate data and build the climate tables (`scripts/02_climate_data.R`). After the proposal is revised, Shiny and deployment will be the main focus.
 
 In class we made maps with `sf`, which works with vector data such as points and polygons. My climate data are rasters: grids of about 1 km cells covering the whole world. `terra` is built for rasters, reads the large map files from disk without loading them into memory, and lets me take the mean of the cells inside a circle, weighting each cell by how much of it lies inside. That weighted mean is what makes the circle comparison for Question 3 possible, and `sf` alone cannot do it.
 
@@ -104,13 +104,13 @@ In class we made maps with `sf`, which works with vector data such as points and
 |------------|------------|------------|------------|------------|------------|
 | Population table | Done | M. Sans-Fuentes | Nov 8 | High | Download the gnomAD metadata and build one row per HGDP population (54 populations, 52 sites) |
 | Climate tables | Done | M. Sans-Fuentes | Nov 13 | High | Extract WorldClim variables at each point and over 10–100 km circles; compute the annual photoperiod range and the sensitivity table |
-| Proposal for peer review | In progress | M. Sans-Fuentes | Nov 16 (before class) | High | Finish the draft: plan, repository organization and references |
+| Proposal for peer review | Done | M. Sans-Fuentes | Nov 16 (before class) | High | Draft finished, rendered and pushed to the repository |
 | Peer review in class | To do | M. Sans-Fuentes | Nov 16 | High | Give and receive comments on the proposals |
 | Revise proposal | To do | M. Sans-Fuentes | Nov 17-18 | High | Incorporate the peer-review and instructor comments; close each review issue with a commit |
 | Static figures | To do | M. Sans-Fuentes | Nov 20 | High | One ggplot2 figure for each question: climate by region, absolute latitude against temperature, point against circle means |
 | Shiny app skeleton | To do | M. Sans-Fuentes | Nov 24 | High | Basic app that reads the derived tables and shows the three figures (before Thanksgiving) |
-| Radius slider (question 3) | To do | M. Sans-Fuentes | Nov 28 | High | Add the radius slider to the point-versus-circle figure |
-| Link the figures | To do | M. Sans-Fuentes | Nov 30 | Moderate | Click a population in one figure to highlight the same population in the other two |
+| Controls | To do | M. Sans-Fuentes | Nov 28 | High | Add the climate-variable dropdown (Question 1) and the radius slider (Question 3) |
+| Link the figures | To do | M. Sans-Fuentes | Nov 30 | Moderate | If time allows: click a population in one figure to highlight the same population in the other two |
 | Deploy the app | To do | M. Sans-Fuentes | Dec 1 | High | Publish the app and test it from another computer |
 | Write-up draft | To do | M. Sans-Fuentes | Dec 2 | Moderate | Introduction and approach, reusing the proposal text |
 | Slides | To do | M. Sans-Fuentes | Dec 4 | High | Prepare Quarto presentation, with pptx output. Short deck- maximum presentation time is 15 min (including questions) |
@@ -165,9 +165,11 @@ Each folder has or will have a README that says what it contains. Scripts are nu
 - gnomAD v3.1.2 HGDP + 1KG sample metadata (`gnomad_meta_updated.tsv`). Genome Aggregation Database. <https://gnomad-public-us-east-1.s3.amazonaws.com/release/3.1/secondary_analyses/hgdp_1kg_v2/metadata_and_qc/gnomad_meta_updated.tsv> (accessed October 2026).
 - WorldClim 2.1 bioclimatic variables, 30 arc-seconds. <https://www.worldclim.org/data/worldclim21.html> (accessed October 2026).
 
-# AI disclosure: how AI (Claude) was used in this proposal
+# AI disclosure  
 
-- **Coding assistance:** to learn how to use the `terra` package to download and extract the climate data, to check my photoperiod function against Forsythe et al. (1995), and to debug the scripts that download and process the climate data and the population data (`scripts/00_download_metadata.R`, `scripts/01_populations.R` and `scripts/02_climate_data.R`). I ran and checked the code myself.
+How AI (Claude) was used in this proposal:
+
+- **Coding assistance:** to learn how to use the `terra` and `geodata` packages to download and extract the climate data, to check my photoperiod function against Forsythe et al. (1995), and to debug the scripts that download and process the climate data and the population data (`scripts/00_download_metadata.R`, `scripts/01_populations.R` and `scripts/02_climate_data.R`). I ran and checked the code myself.
 
 - **Grammar and typos revision:** I used it to review the wording of the code comments, the READMEs and parts of this proposal. I wrote the text and made the design decisions myself.
 
