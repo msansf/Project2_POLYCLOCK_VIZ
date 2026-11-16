@@ -98,6 +98,14 @@ For this class I am teaching myself three new skills: working with maps, buffers
 
 In class we made maps with `sf`, which works with vector data such as points and polygons. My climate data are rasters: grids of about 1 km cells covering the whole world. `terra` is built for rasters, reads the large map files from disk without loading them into memory, and lets me take the mean of the cells inside a circle, weighting each cell by how much of it lies inside. That weighted mean is what makes the circle comparison for Question 3 possible, and `sf` alone cannot do it.
 
+## Potential challenges
+
+- **Learning Shiny in three weeks.** Shiny is new to me. First, I will make a static version of each figure so that the project has complete results even if some interactive features are removed. Linking the figures is planned only if time allows, so that would be the first feature I would remove.
+
+- **Deploying the app** The application must run on a server with its data and packages. The climate maps (approximately 10 GB) are too large to upload, so the application will take its climate values from the small derived tables. The maps in the application will be simple background maps with the populations and the circle drawn on them, not temperature-colored maps. I have set aside time to test the application from another computer.
+
+- **Imperfect data.** One coordinate is located at sea and has no climate value at that point, so that population will not appear in the figures that use point values. Some mountain populations have temperature values that vary by several degrees over tens of kilometers. These cases are part of what Question 3 shows, so I will keep them in the data and highlight them, rather than removing them.
+
 # Work plan
 
 | Task Name | Status | Assignee | Due | Priority | Summary |
@@ -113,7 +121,7 @@ In class we made maps with `sf`, which works with vector data such as points and
 | Link the figures | To do | M. Sans-Fuentes | Nov 30 | Moderate | If time allows: click a population in one figure to highlight the same population in the other two |
 | Deploy the app | To do | M. Sans-Fuentes | Dec 1 | High | Publish the app and test it from another computer |
 | Write-up draft | To do | M. Sans-Fuentes | Dec 2 | Moderate | Introduction and approach, reusing the proposal text |
-| Slides | To do | M. Sans-Fuentes | Dec 4 | High | Prepare Quarto presentation, with pptx output. Short deck- maximum presentation time is 15 min (including questions) |
+| Slides | To do | M. Sans-Fuentes | Dec 4 | High | Prepare Quarto presentation, with pptx output. Short deck: maximum presentation time is 15 min (including questions) |
 | Rehearse presentation | To do | M. Sans-Fuentes | Dec 6 | Moderate | Practice with a timer |
 | Present | To do | M. Sans-Fuentes | Dec 7 or 9 | High | In-class presentation |
 | Finish write-up | To do | M. Sans-Fuentes | Dec 11 | High | Findings with inline numbers, limitations, final abstract |
@@ -165,7 +173,7 @@ Each folder has or will have a README that says what it contains. Scripts are nu
 - gnomAD v3.1.2 HGDP + 1KG sample metadata (`gnomad_meta_updated.tsv`). Genome Aggregation Database. <https://gnomad-public-us-east-1.s3.amazonaws.com/release/3.1/secondary_analyses/hgdp_1kg_v2/metadata_and_qc/gnomad_meta_updated.tsv> (accessed October 2026).
 - WorldClim 2.1 bioclimatic variables, 30 arc-seconds. <https://www.worldclim.org/data/worldclim21.html> (accessed October 2026).
 
-# AI disclosure  
+# AI disclosure
 
 How AI (Claude) was used in this proposal:
 
