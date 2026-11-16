@@ -23,7 +23,8 @@ Only population metadata and climate are used here; no genetic data.
 ## Repository structure
 
 
-```         
+```    
+
 Project2_POLYCLOCK_VIZ/
 |--- README.md                      # project overview and how to reproduce
 |--- abstract.qmd                   # abstract (written at the end)
