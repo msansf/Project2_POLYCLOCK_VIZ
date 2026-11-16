@@ -23,7 +23,7 @@ Only population metadata and climate are used here; no genetic data.
 ## Repository structure
 
 
-```    
+```
 
 Project2_POLYCLOCK_VIZ/
 |--- README.md                      # project overview and how to reproduce
@@ -32,7 +32,7 @@ Project2_POLYCLOCK_VIZ/
 |--- data/
 |   |--- README.md                  # codebook for every file
 |   |--- raw/                       # downloads, not in the repository
-|   │   |--- README.md
+|   |   |--- README.md
 |   |--- derived/                   # tables built by the scripts
 |       |--- populations_54.csv
 |       |--- climate_54.csv
