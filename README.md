@@ -29,24 +29,24 @@ Project2_POLYCLOCK_VIZ/
 |--- abstract.qmd                   # abstract (written at the end)
 |--- about.Rmd                      # about page 
 |--- data/
-│   |--- README.md                  # codebook for every file
-│   |--- raw/                       # downloads, not in the repository
-│   │   |--- README.md
-│   |--- derived/                   # tables built by the scripts
-│       |--- populations_54.csv
-│       |--- climate_54.csv
-│       |--- climate_buffers.csv
-│       |--- climate_sensitivity.csv
+|   |--- README.md                  # codebook for every file
+|   |--- raw/                       # downloads, not in the repository
+|   │   |--- README.md
+|   |--- derived/                   # tables built by the scripts
+|       |--- populations_54.csv
+|       |--- climate_54.csv
+|       |--- climate_buffers.csv
+|       |--- climate_sensitivity.csv
 |       |--- README.md
 |--- scripts/
-│   |--- 00_download_metadata.R     # gnomAD metadata
-│   |--- 01_populations.R           # population table
-│   |--- 02_climate_data.R          # climate tables and photoperiod
-│   |--- README.md
+|   |--- 00_download_metadata.R     # gnomAD metadata
+|   |--- 01_populations.R           # population table
+|   |--- 02_climate_data.R          # climate tables and photoperiod
+|   |--- README.md
 |--- proposal/                      # Proposal documents
-│   |--- proposal.qmd
-|   |--- proposal.html
-│   |--- README.md    
+|   |--- proposal.qmd
+|--- proposal.html
+|   |--- README.md    
 |--- app/                           # (planned) Shiny app and its README
 |--- presentation/                  # (planned) Quarto slides and README
 |--- writeup/                       # (planned) final write-up and README
