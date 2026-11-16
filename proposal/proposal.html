@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Maria A. Sans-Fuentes">
-<meta name="dcterms.date" content="2026-11-15">
+<meta name="dcterms.date" content="2026-11-16">
 
 <title>Visualizing the Design Space of a Circadian Climate-Adaptation Study</title>
 <style>
@@ -2174,7 +2174,7 @@ vertical-align: -.125em;
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
+  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
@@ -2186,6 +2186,7 @@ vertical-align: -.125em;
   <ul class="collapse">
   <li><a href="#planned-figures" id="toc-planned-figures" class="nav-link" data-scroll-target="#planned-figures">Planned figures</a></li>
   <li><a href="#what-is-new-to-me" id="toc-what-is-new-to-me" class="nav-link" data-scroll-target="#what-is-new-to-me">What is new to me</a></li>
+  <li><a href="#potential-challenges" id="toc-potential-challenges" class="nav-link" data-scroll-target="#potential-challenges">Potential challenges</a></li>
   </ul></li>
   <li><a href="#work-plan" id="toc-work-plan" class="nav-link" data-scroll-target="#work-plan">Work plan</a></li>
   <li><a href="#repository-organization" id="toc-repository-organization" class="nav-link" data-scroll-target="#repository-organization">Repository organization</a></li>
@@ -2219,7 +2220,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 15, 2026</p>
+      <p class="date">November 16, 2026</p>
     </div>
   </div>
   
@@ -2291,6 +2292,14 @@ vertical-align: -.125em;
 <h2 class="anchored" data-anchor-id="what-is-new-to-me">What is new to me</h2>
 <p>For this class I am teaching myself three new skills: working with maps, buffers and raster data in the <code>terra</code> package; building an interactive app with Shiny; and deploying the app so that others can access it. Before writing this proposal, I used <code>terra</code> (with the <code>geodata</code> package for the download) to extract the climate data and build the climate tables (<code>scripts/02_climate_data.R</code>). After the proposal is revised, Shiny and deployment will be the main focus.</p>
 <p>In class we made maps with <code>sf</code>, which works with vector data such as points and polygons. My climate data are rasters: grids of about 1 km cells covering the whole world. <code>terra</code> is built for rasters, reads the large map files from disk without loading them into memory, and lets me take the mean of the cells inside a circle, weighting each cell by how much of it lies inside. That weighted mean is what makes the circle comparison for Question 3 possible, and <code>sf</code> alone cannot do it.</p>
+</section>
+<section id="potential-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="potential-challenges">Potential challenges</h2>
+<ul>
+<li><p><strong>Learning Shiny in three weeks.</strong> Shiny is new to me. First, I will make a static version of each figure so that the project has complete results even if some interactive features are removed. Linking the figures is planned only if time allows, so that would be the first feature I would remove.</p></li>
+<li><p><strong>Deploying the app</strong> The application must run on a server with its data and packages. The climate maps (approximately 10 GB) are too large to upload, so the application will take its climate values from the small derived tables. The maps in the application will be simple background maps with the populations and the circle drawn on them, not temperature-colored maps. I have set aside time to test the application from another computer.</p></li>
+<li><p><strong>Imperfect data.</strong> One coordinate is located at sea and has no climate value at that point, so that population will not appear in the figures that use point values. Some mountain populations have temperature values that vary by several degrees over tens of kilometers. These cases are part of what Question 3 shows, so I will keep them in the data and highlight them, rather than removing them.</p></li>
+</ul>
 </section>
 </section>
 <section id="work-plan" class="level1">
@@ -2409,7 +2418,7 @@ vertical-align: -.125em;
 <td>M. Sans-Fuentes</td>
 <td>Dec 4</td>
 <td>High</td>
-<td>Prepare Quarto presentation, with pptx output. Short deck- maximum presentation time is 15 min (including questions)</td>
+<td>Prepare Quarto presentation, with pptx output. Short deck: maximum presentation time is 15 min (including questions)</td>
 </tr>
 <tr class="odd">
 <td>Rehearse presentation</td>

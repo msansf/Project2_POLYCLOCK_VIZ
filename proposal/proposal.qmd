@@ -7,6 +7,7 @@ format:
     html:
         toc: true
         toc-depth: 2
+        toc-expand: true
         code-fold: true
         embed-resources: true
         include-in-header: 
@@ -100,7 +101,7 @@ In class we made maps with `sf`, which works with vector data such as points and
 
 ## Potential challenges
 
-- **Learning Shiny in three weeks.** Shiny is new to me. First, I will make a static version of each figure so that the project has complete results even if some interactive features are removed. Linking the figures is planned only if time allows, so that would be the first feature I would remove.
+- **Learning Shiny in three weeks.** Shiny is new to me. First, I will make a static version of each figure so that the project has complete results even if some interactive features are removed. Linking the figures is planned only if time allows, so that would be the first feature I would remove. 
 
 - **Deploying the app** The application must run on a server with its data and packages. The climate maps (approximately 10 GB) are too large to upload, so the application will take its climate values from the small derived tables. The maps in the application will be simple background maps with the populations and the circle drawn on them, not temperature-colored maps. I have set aside time to test the application from another computer.
 
